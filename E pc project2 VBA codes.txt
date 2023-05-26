@@ -1,0 +1,64 @@
+Q1 : I have wrote VBA code for data formatting and run on original data set.(col.A,B,C)
+     later i created a Macro recording and run (of which screenshot is attached)
+
+VBA code for data formatting: 
+
+
+Sub formatting()
+
+  'Definining the variables:
+  Dim rng As Range
+  Dim condition1 As FormatCondition, condition2 As FormatCondition
+
+ 'Fixing/Setting the range on which conditional formatting is to be desired
+  Set rng = Range("A1:D307512")
+
+  'To delete/clear any existing conditional formatting from the range
+   rng.FormatConditions.Delete
+
+  'Defining and setting the criteria for each conditional format
+   Set condition1 = rng.FormatConditions.Add(xlCellValue, xlGreater, "=80")
+   Set condition2 = rng.FormatConditions.Add(xlCellValue, xlLess, "=50")
+
+   'Defining and setting the format to be applied for each condition
+   With condition1
+    .Font.Color = vbBlue
+    .Font.Bold = True
+   End With
+
+   With condition2
+     .Font.Color = vbRed
+      .Font.Bold = True
+   End With
+
+End Sub
+
+
+Q2 : VBA code to convert selected data into .pdf (screenshot attached)
+
+Sub SaveRangeAsPDF()
+
+'Create and assign variables
+Dim saveLocation As String
+Dim ws as Worksheet
+Dim rng As Range
+
+saveLocation = "C:\Users\prati\OneDrive\Documents\myPDFFile.pdf"
+Set ws = Sheets("Applicant Data")
+Set rng = ws.Range("A1:C10")
+
+'Save a range as PDF
+rng.ExportAsFixedFormat Type:=xlTypePDF, _
+Filename:=saveLocation
+
+End Sub
+
+Q3 : Check spelling mistake code
+
+Dim Myrange As Range
+Selection.SpecialCells(xlVisible).Select
+For Each Myrange In Selection
+    If Application.CheckSpelling(word:=Myrange.Value) = False Then
+    Myrange.Font.Color = vbRed
+    End If
+Next
